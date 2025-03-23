@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply px-4 md:px-20 pb-10;  /* Apply padding to the body */
+  }
+}
+.subheader{
+  @apply text-white text-lg font-semibold bg-blue-600 rounded-[5px]  w-full h-14 items-center flex  justify-center
+}
+.contentTitle{
+  @apply text-base font-semibold sm:text-base md:text-lg text-center mx-4
+}
