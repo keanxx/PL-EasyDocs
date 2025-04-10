@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../Components/Header'
-import Hero from '../Components/Hero'
 import CustomButton from '../Components/CustomButton'
 import '../Index.css'
 import Schedule from '../Components/Schedule'
@@ -12,7 +10,7 @@ const Dashboard = () => {
     <>
 
 
-      <div className='w-full h-auto'>
+      <div className='w-full h-auto py-5'>
         <div className='flex space-x-2 flex-grow py-5 justify-start'>
           <CustomButton to="/request" icon={ChevronRight}>Request Now</CustomButton>
           <CustomButton to="/history" icon={History}>Request History</CustomButton>

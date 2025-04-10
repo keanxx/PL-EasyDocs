@@ -34,7 +34,7 @@ const OtpVerification = () => {
     const handleSubmit = () => {
         if (otp.join('').length === 6) {
             alert('OTP Verified Successfully!');
-            navigate('/'); // Redirect to homepage or dashboard
+            navigate('/resetPassword'); // Redirect to homepage or dashboard
         } else {
             alert('Please enter a valid 6-digit OTP.');
         }

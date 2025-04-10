@@ -28,7 +28,7 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className='w-full h-full flex items-center justify-center py-5'>
+        <div className='w-full h-screen flex items-center justify-center py-5'>
             <main className="w-[90%] sm:w-3/4 md:w-2/3 lg:w-1/3 max-w-lg border border-gray-800 flex flex-col p-6 rounded-xl shadow-lg">
 
                 <section className='flex flex-col gap-3 mb-5'>
@@ -123,10 +123,14 @@ const ResetPassword = () => {
                     </Typography>
 
                     <section className='flex justify-evenly'>
-                        <Button fullWidth onClick={handleClose} sx={{ mt: 1, color: "black" }}>
+                        <Button fullWidth onClick={handleClose} 
+                        
+                        sx={{ mt: 1, color: "black" }}>
                             Cancel
                         </Button>
-                        <Button fullWidth variant="contained" sx={{ mt: 1, backgroundColor: 'black', color: 'white' }}>
+                        <Button fullWidth variant="contained" 
+                        onClick={() => navigate("/")}
+                        sx={{ mt: 1, backgroundColor: 'black', color: 'white' }}>
                             Proceed
                         </Button>
                     </section>

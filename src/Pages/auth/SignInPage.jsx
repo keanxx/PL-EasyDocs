@@ -5,6 +5,7 @@ import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 
 
+
 const SignInPage = () => {
     const [openResetPassword, setOpenResetPassword] = useState(false);
     const [email, setEmail] = useState('');
@@ -38,7 +39,7 @@ const SignInPage = () => {
     };
 
     return (
-        <div className='w-full h-full flex items-center justify-center py-5'>
+        <div className=' w-full h-screen flex items-center justify-center'>
             <main className="w-[90%] sm:w-3/4 md:w-2/3 lg:w-1/3 max-w-lg border border-gray-800 flex flex-col p-6 rounded-xl shadow-lg">
 
                 <section className='flex flex-col gap-3 mb-5'>
