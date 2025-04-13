@@ -19,7 +19,7 @@ const SlideDialog = ({
   actions,
   transitionComponent = Transition,
   keepMounted = true,
-  ariaDescription = 'alert-dialog-slide-description'
+  ariaDescription = 'alert-dialog-slide-description',
 }) => {
   return (
     <Dialog
@@ -28,9 +28,34 @@ const SlideDialog = ({
       keepMounted={keepMounted}
       onClose={onClose}
       aria-describedby={ariaDescription}
+      fullWidth 
+      maxWidth="sm" 
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: '10px',
+          padding: { xs: '16px', sm: '24px' }, 
+          width: { xs: '90%', sm: 'auto' }, 
+          maxWidth: '600px', 
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+        },
+      }}
     >
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
+      {title && (
+        <DialogTitle
+          sx={{
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }, 
+            textAlign: 'center',
+          }}
+        >
+          {title}
+        </DialogTitle>
+      )}
+      <DialogContent
+        sx={{
+          textAlign: 'center',
+          fontSize: { xs: '0.875rem', sm: '1rem' }, 
+        }}
+      >
         {typeof content === 'string' ? (
           <DialogContentText id={ariaDescription}>
             {content}
@@ -39,7 +64,16 @@ const SlideDialog = ({
           content
         )}
       </DialogContent>
-      {actions && <DialogActions>{actions}</DialogActions>}
+      {actions && (
+        <DialogActions
+          sx={{
+            justifyContent: 'center', 
+            padding: { xs: '8px', sm: '16px' }, 
+          }}
+        >
+          {actions}
+        </DialogActions>
+      )}
     </Dialog>
   );
 };

@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, FormControlLabel, Modal, Box, Typography, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Modal, Box, Typography, TextField, CircularProgress } from '@mui/material';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import SlideDialog from '../../Components/SlideDialog'; // Import the SlideDialog component
 
 const SignInPage = () => {
     const [openResetPassword, setOpenResetPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    
-    const [emailError, setEmailError] = useState('');
+    const [forgotPassowordEmail, forgotPassowordSetEmail] = useState('');
+    const [forgotPassowordEmailError, forgotPassowordSetEmailError] = useState('');
+    const [password, setPassword] = useState(''); // State for password
+    const [passwordError, setPasswordError] = useState(''); // State for password error
+    const [openDialog, setOpenDialog] = useState(false); //  SlideDialog visibility
+    const [dialogMessage, setDialogMessage] = useState(''); // Message for SlideDialog
+    const [loadingEmail, setLoadingEmail] = useState(false); // State for email validation loader
+    const [loadingPassword, setLoadingPassword] = useState(false); // State for password validation loader
     const navigate = useNavigate();
-
-    
 
     const handleForgotPassword = () => {
         setOpenResetPassword(true);
@@ -21,21 +23,81 @@ const SignInPage = () => {
 
     const handleClose = () => {
         setOpenResetPassword(false);
-        setEmail(""); // Reset input on close
-        setEmailError(""); // Reset error message
+        forgotPassowordSetEmail(""); 
+        forgotPassowordSetEmailError(""); 
     };
 
     const handleEmailChange = (e) => {
         const value = e.target.value;
-        setEmail(value);
+        forgotPassowordSetEmail(value);
+        setLoadingEmail(true); 
 
-        // Simple regex to validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            setEmailError("Please enter a valid email address");
-        } else {
-            setEmailError(""); // Clear error if valid
+        
+        setTimeout(() => {
+          
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                forgotPassowordSetEmailError("Please enter a valid email address");
+            } else {
+                forgotPassowordSetEmailError(""); 
+            }
+            setLoadingEmail(false); 
+        }, 1000);
+    };
+
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+        setLoadingPassword(true); 
+
+        
+        setTimeout(() => {
+           
+            const passwordRegex = /^.{8,}$/; 
+            if (!passwordRegex.test(value)) {
+                setPasswordError("Please enter a correct password (minimum 8 characters).");
+            } else {
+                setPasswordError(""); 
+            }
+            setLoadingPassword(false); 
+        }, 1000);
+    };
+
+    const handleSignIn = () => {
+        const email = forgotPassowordEmail.trim();
+
+        // Validate email
+        if (!email) {
+            setDialogMessage("Email is required.");
+            setOpenDialog(true);
+            return;
         }
+
+        if (forgotPassowordEmailError) {
+            setDialogMessage("Please fix the email format before signing in.");
+            setOpenDialog(true);
+            return;
+        }
+
+        // Validate password
+        if (!password) {
+            setDialogMessage("Password is required.");
+            setOpenDialog(true);
+            return;
+        }
+
+        if (passwordError) {
+            setDialogMessage("Please fix the password format before signing in.");
+            setOpenDialog(true);
+            return;
+        }
+
+        // Navigate to dashboard if no errors
+        navigate("/dashboard");
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
     return (
@@ -48,17 +110,53 @@ const SignInPage = () => {
                 </section>
 
                 <section className='flex flex-col justify-center gap-3 '>
-                    <article className='flex flex-col justify-center'>
+                    <article className='flex flex-col justify-center relative'>
                         <p>Email:</p>
-                        <input className='border-gray-500 border rounded-[5px] p-2'
+                        <input
+                            className='border-gray-500 border rounded-[5px] p-2'
                             placeholder='yourname@example.com'
-                            type="text" />
+                            type="text"
+                            value={forgotPassowordEmail}
+                            onChange={handleEmailChange}
+                        />
+                        {loadingEmail && (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    right: '10px',
+                                    transform: 'translateY(-50%)',
+                                }}
+                            />
+                        )}
+                        {forgotPassowordEmailError && (
+                            <p className="text-red-500 text-sm mt-1">{forgotPassowordEmailError}</p>
+                        )}
                     </article>
-                    <article className='flex flex-col justify-center'>
+                    <article className='flex flex-col justify-center relative'>
                         <p>Password:</p>
-                        <input className='border-gray-500 border rounded-[5px] p-2'
+                        <input
+                            className='border-gray-500 border rounded-[5px] p-2'
                             placeholder='····'
-                            type="password" />
+                            type="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                        />
+                        {loadingPassword && (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    right: '10px',
+                                    transform: 'translateY(-50%)',
+                                }}
+                            />
+                        )}
+                        {passwordError && (
+                            <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+                        )}
                     </article>
                 </section>
 
@@ -90,7 +188,7 @@ const SignInPage = () => {
 
                 <article className='flex flex-col gap-3 font-medium'>
                     <Button
-                     onClick={() => navigate("/dashboard")}
+                        onClick={handleSignIn} // Use the new handleSignIn function
                         sx={{
                             backgroundColor: 'black',
                             color: 'white',
@@ -105,8 +203,8 @@ const SignInPage = () => {
                     >
                         Sign in
                     </Button>
-                    <p 
-                        className='text-center hover:cursor-pointer hover:underline' 
+                    <p
+                        className='text-center hover:cursor-pointer hover:underline'
                         onClick={handleForgotPassword}
                     >
                         Forgot your password?
@@ -131,7 +229,7 @@ const SignInPage = () => {
                     </button>
 
                     <p className='text-center'>
-                        Don't have an account yet? 
+                        Don't have an account yet?
                         <span className='hover:cursor-pointer hover:underline'>
                             <Link to="/signup"> Sign up</Link>
                         </span>
@@ -166,17 +264,17 @@ const SignInPage = () => {
                         label="Email Address"
                         variant="outlined"
                         margin="normal"
-                        value={email}
+                        value={forgotPassowordEmail}
                         onChange={handleEmailChange}
-                        error={!!emailError} // Show error style if emailError exists
-                        helperText={emailError} // Show error message
+                        error={!!forgotPassowordEmailError} // Show error style if emailError exists
+                        helperText={forgotPassowordEmailError} // Show error message
                     />
 
                     <Button
                         fullWidth
                         variant="contained"
                         sx={{ mt: 2, backgroundColor: 'black', color: 'white' }}
-                        disabled={!email || !!emailError} // Disable if invalid email
+                        disabled={!forgotPassowordEmail || !!forgotPassowordEmailError} // Disable if invalid email
                         onClick={() => navigate("/otp")}
                     >
                         Send Reset Link
@@ -192,9 +290,32 @@ const SignInPage = () => {
                 </Box>
             </Modal>
 
-               
+            {/* Validation Error Dialog */}
+            <SlideDialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+                title="Validation Error"
+                content={dialogMessage}
+                actions={
+                    <Button
+                        onClick={handleCloseDialog}
+                        sx={{
+                            backgroundColor: '#000',
+                            color: '#fff',
+                            '&:hover': {
+                                backgroundColor: '#333',
+                            },
+                            textTransform: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '5px',
+                        }}
+                    >
+                        Close
+                    </Button>
+                }
+            />
         </div>
     );
-}
+};
 
 export default SignInPage;

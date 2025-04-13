@@ -1,9 +1,98 @@
-import { Button, Checkbox, FormControlLabel } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react';
+import { Button, Checkbox, FormControlLabel, CircularProgress } from '@mui/material';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import SlideDialog from '../../Components/SlideDialog';
+
 const SignUpPage = () => {
+    const [fullName, setFullName] = useState('');
+const [email, setEmail] = useState('');
+const [emailError, setEmailError] = useState('');
+const [password, setPassword] = useState('');
+const [passwordError, setPasswordError] = useState('');
+const [openDialog, setOpenDialog] = useState(false);
+const [dialogMessage, setDialogMessage] = useState('');
+const [loadingEmail, setLoadingEmail] = useState(false);
+const [loadingPassword, setLoadingPassword] = useState(false);
+
+const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setLoadingEmail(true);
+    
+    setTimeout(() => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            setEmailError("Please enter a valid email address");
+        } else {
+            setEmailError("");
+        }
+        setLoadingEmail(false);
+    }, 1000);
+};
+
+const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setLoadingPassword(true);
+    
+    setTimeout(() => {
+        const passwordRegex = /^.{8,}$/;
+        if (!passwordRegex.test(value)) {
+            setPasswordError("Password must be at least 8 characters");
+        } else {
+            setPasswordError("");
+        }
+        setLoadingPassword(false);
+    }, 1000);
+};
+const handleNameChange = (e) => {
+    setFullName(e.target.value);
+};
+
+const handleSignUp = () => {
+    // Validate full name
+    if (!fullName.trim()) {
+        setDialogMessage("Full name is required");
+        setOpenDialog(true); // Open dialog after setting the message
+        return;
+    }
+
+    // Validate email
+    if (!email.trim()) {
+        setDialogMessage("Email is required");
+        setOpenDialog(true);
+        return;
+    }
+
+    if (emailError) {
+        setDialogMessage("Please fix the email format");
+        setOpenDialog(true);
+        return;
+    }
+
+    // Validate password
+    if (!password) {
+        setDialogMessage("Password is required");
+        setOpenDialog(true);
+        return;
+    }
+
+    if (passwordError) {
+        setDialogMessage("Password must be at least 8 characters");
+        setOpenDialog(true);
+        return;
+    }
+
+    // If all validations pass
+    console.log("Sign up successful!");
+};
+
+const handleCloseDialog = () => {
+    setOpenDialog(false);
+};
+
     return (
         <div className='w-full h-screen flex items-center justify-center py-5'>
             <main className="w-[90%] sm:w-3/4 md:w-2/3 lg:w-1/3 max-w-lg border border-gray-800 flex flex-col p-6 rounded-xl shadow-lg">
@@ -13,24 +102,49 @@ const SignUpPage = () => {
                     <p className='text-3xl font-semibold'>Sign up</p></section>
                  
                  <section className='flex flex-col justify-center gap-3 '>
-                <article className='flex flex-col justify-center '>
-                    <p>Full name:</p>
-                    <input className='border-gray-500 border rounded-[5px] p-2'
-                        placeholder='Kean Joshua'
-                        type="text" />
-                        </article>
-                <article className='flex flex-col justify-center '>
-                    <p>Email:</p>
-                    <input className='border-gray-500 border rounded-[5px] p-2'
-                        placeholder='keanjoshua@tan'
-                        type="text" />
-                </article>
-                <article className='flex flex-col justify-center'>
-                    <p>Password:</p>
-                    <input className='border-gray-500 border rounded-[5px] p-2'
-                        placeholder='····'
-                        type="password" />
-                </article>
+                {/* Full Name Field */}
+<article className='flex flex-col justify-center'>
+    <p>Full name:</p>
+    <input 
+        className='border-gray-500 border rounded-[5px] p-2'
+        placeholder='Kean Joshua'
+        type="text"
+        value={fullName}
+        onChange={handleNameChange}
+    />
+</article>
+
+{/* Email Field */}
+<article className='flex flex-col justify-center relative'>
+    <p>Email:</p>
+    <input 
+        className='border-gray-500 border rounded-[5px] p-2'
+        placeholder='keanjoshua@example.com'
+        type="text"
+        value={email}
+        onChange={handleEmailChange}
+    />
+    {loadingEmail && (
+        <CircularProgress size={20} sx={{ position: 'absolute', right: '10px', top: '50%' }} />
+    )}
+    {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+</article>
+
+{/* Password Field */}
+<article className='flex flex-col justify-center relative'>
+    <p>Password:</p>
+    <input 
+        className='border-gray-500 border rounded-[5px] p-2'
+        placeholder='····'
+        type="password"
+        value={password}
+        onChange={handlePasswordChange}
+    />
+    {loadingPassword && (
+        <CircularProgress size={20} sx={{ position: 'absolute', right: '10px', top: '50%' }} />
+    )}
+    {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+</article>
                 </section>
                 <article className=''>
                     <FormControlLabel
@@ -60,19 +174,20 @@ const SignUpPage = () => {
 
                 </article>
                 <article className='flex flex-col gap-3 font-medium'>
-                    <Button
-                        sx={{
-                            backgroundColor: 'black',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'primary.dark',
-                            },
-                            padding: '10px 20px',
-                            borderRadius: '5px',
-                            fontWeight: 'bold',
-                            width: '100%'
-                        }}
-                    >Sign up</Button>
+                <Button
+    onClick={handleSignUp}
+    sx={{
+        backgroundColor: 'black',
+        color: 'white',
+        '&:hover': { backgroundColor: 'primary.dark' },
+        padding: '10px 20px',
+        borderRadius: '5px',
+        fontWeight: 'bold',
+        width: '100%'
+    }}
+>
+    Sign up
+</Button>
 
                 </article>
                 <div className="flex items-center my-4">
@@ -98,6 +213,32 @@ const SignUpPage = () => {
 
             </main>
 
+
+
+            <SlideDialog
+    open={openDialog}
+    onClose={handleCloseDialog}
+    title="Sign up Failed"
+    content={dialogMessage}
+    actions={
+        <Button
+                               onClick={handleCloseDialog}
+                               sx={{
+                                   backgroundColor: '#000',
+                                   color: '#fff',
+                                   '&:hover': {
+                                       backgroundColor: '#333',
+                                   },
+                                   textTransform: 'none',
+                                   padding: '8px 16px',
+                                   borderRadius: '5px',
+                               }}
+                           >
+                               Close
+                           </Button>
+    }
+/>
+   
         </div>
     )
 }
