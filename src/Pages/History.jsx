@@ -39,7 +39,7 @@ const History = () => {
 
 
           {/* Instruction section */}
-          <div className='md:w-[27%] w-full  shadow-lg border-gray-200 border rounded-lg px-5 py-3 inline-flex flex-col relative'>
+          <div className='md:w-[27%] w-full hidden md:flex  shadow-lg border-gray-200 border rounded-lg px-5 py-3  flex-col relative'>
             <div className='flex justify-end w-full'>
               <NotificationsActiveOutlined fontSize="large" />
             </div>

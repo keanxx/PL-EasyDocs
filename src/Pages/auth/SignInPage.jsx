@@ -3,7 +3,8 @@ import { Button, Checkbox, FormControlLabel, Modal, Box, Typography, TextField, 
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import SlideDialog from '../../Components/SlideDialog'; // Import the SlideDialog component
+import SlideDialog from '../../Components/SlideDialog'; 
+
 
 const SignInPage = () => {
     const [openResetPassword, setOpenResetPassword] = useState(false);
@@ -218,16 +219,7 @@ const SignInPage = () => {
                 </div>
 
                 <div className="flex flex-col space-y-3 w-full max-w-sm mx-auto font-medium">
-                    <button className="flex items-center justify-center w-full border border-gray-600 rounded-lg py-2 text-lg hover:bg-black hover:text-white transition">
-                        <FcGoogle className="text-2xl mr-3" />
-                        Sign in with Google
-                    </button>
-
-                    <button className="flex items-center justify-center w-full border border-gray-600 rounded-lg py-2 text-lg hover:bg-black hover:text-white transition">
-                        <FaFacebook className="text-blue-500 text-2xl mr-3" />
-                        Sign in with Facebook
-                    </button>
-
+                   
                     <p className='text-center'>
                         Don't have an account yet?
                         <span className='hover:cursor-pointer hover:underline'>
@@ -294,7 +286,7 @@ const SignInPage = () => {
             <SlideDialog
                 open={openDialog}
                 onClose={handleCloseDialog}
-                title="Validation Error"
+                title="Sign in Failed"
                 content={dialogMessage}
                 actions={
                     <Button

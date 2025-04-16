@@ -173,7 +173,7 @@ const Request = () => {
 
                         <p className="text-xl font-bold p-5">Payment Method: <span className="text-xl font-bold px-5">CASH</span>
                         </p>
-                        <div className="flex justify-end flex-wrap px-5 gap-5 pb-5">
+                        <div className="flex  md:justify-end flex-wrap px-5 gap-5 pb-5">
                             <button 
                             onClick={() => navigate("/dashboard")}
                             className="flex items-center justify-center bg-[#ff4747] px-9 py-2 text-white text-lg font-bold rounded-[5px] transition">CANCEL</button>
@@ -184,7 +184,7 @@ const Request = () => {
                     </div>
 
                     {/* Instruction section */}
-                    <div className='md:w-[27%] w-full  shadow-lg border-gray-200 border rounded-lg px-5 py-3 inline-flex flex-col relative'>
+                    <div className='md:w-[27%] w-full hidden md:block shadow-lg border-gray-200 border rounded-lg px-5 py-3  flex-col relative'>
                         <div className='flex justify-end w-full'>
                             <NotificationsActiveOutlined fontSize="large" />
                         </div>

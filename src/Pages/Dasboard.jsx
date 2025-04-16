@@ -69,7 +69,7 @@ const Dashboard = () => {
           </div>
 
           {/* Instruction section */}
-          <div className='md:w-[27%] w-full shadow-lg border-gray-200 border rounded-lg px-5 py-3 flex flex-col items-center justify-end relative'>
+          <div className='md:w-[27%] w-full hidden md:block shadow-lg border-gray-200 border rounded-lg px-5 py-3  flex-col items-center justify-end relative'>
             <div className='flex justify-end w-full'>
               <NotificationsActiveOutlined fontSize="large" />
             </div>
