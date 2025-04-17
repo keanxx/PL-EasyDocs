@@ -28,14 +28,14 @@ const SlideDialog = ({
       keepMounted={keepMounted}
       onClose={onClose}
       aria-describedby={ariaDescription}
-      fullWidth 
-      maxWidth="sm" 
+      fullWidth
+      maxWidth="sm"
       sx={{
         '& .MuiDialog-paper': {
           borderRadius: '10px',
-          padding: { xs: '16px', sm: '24px' }, 
-          width: { xs: '90%', sm: 'auto' }, 
-          maxWidth: '600px', 
+          padding: { xs: '16px', sm: '24px' },
+          width: { xs: '90%', sm: 'auto' },
+          maxWidth: '600px',
           boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
         },
       }}
@@ -43,7 +43,7 @@ const SlideDialog = ({
       {title && (
         <DialogTitle
           sx={{
-            fontSize: { xs: '1.25rem', sm: '1.5rem' }, 
+            fontSize: { xs: '1.25rem', sm: '1.5rem' },
             textAlign: 'center',
           }}
         >
@@ -53,7 +53,7 @@ const SlideDialog = ({
       <DialogContent
         sx={{
           textAlign: 'center',
-          fontSize: { xs: '0.875rem', sm: '1rem' }, 
+          fontSize: { xs: '0.875rem', sm: '1rem' },
         }}
       >
         {typeof content === 'string' ? (
@@ -67,8 +67,8 @@ const SlideDialog = ({
       {actions && (
         <DialogActions
           sx={{
-            justifyContent: 'center', 
-            padding: { xs: '8px', sm: '16px' }, 
+            justifyContent: 'center',
+            padding: { xs: '8px', sm: '16px' },
           }}
         >
           {actions}
