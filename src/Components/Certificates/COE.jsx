@@ -166,14 +166,14 @@ const COE = () => {
                         <TextField
                             fullWidth
                             required
-                            label="Reason for Request"
+                            label="Purpose of Request"
                             name="reason"
                             value={formData.reason}
                             onChange={handleInputChange}
                             variant="outlined"
                             margin="normal"
                             error={errors.reason}
-                            helperText={errors.reason && "Please provide a reason"}
+                            helperText={errors.reason && "Please provide a pupose"}
                         />
                     </form>
                 }
